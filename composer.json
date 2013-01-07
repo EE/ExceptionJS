@@ -1,0 +1,30 @@
+{
+    "name": "ee/exceptionjs-bundle",
+    "type": "library",
+    "description": "Easy to use javascript errors catcher for Symfony 2.x",
+    "keywords": ["javascript","exception","catcher"],
+    "homepage": "http://laboratorium.ee",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Konrad Podgórski",
+            "email": "konrad.podgorski@gmail.com",
+            "homepage": "http://konradpodgorski.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": ">=2.0,<2.3-dev"
+    },
+    "require-dev": {
+        "twig/twig": "*",
+        "swiftmailer/swiftmailer": "*",
+        "symfony/yaml": "2.1.*"
+    },
+    "autoload": {
+        "psr-0": { "EE\\ExceptionJSBundle": "" }
+    },
+    "target-dir": "EE/ExceptionJSBundle"
+}

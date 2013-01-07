@@ -1,0 +1,26 @@
+{% spaceless %}
+<script type="text/javascript">
+   
+window.onerror=function(message, url, linenumber){
+        var data = {
+            'message' : message,
+            'url': url,
+            'linenumber': linenumber,
+            'userAgent' : navigator.userAgent
+            };
+            
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('ee_exception_js_catch_error') }}',
+            data: {
+                'jsError' : data
+            }
+          });
+        
+            
+          return true;
+       
+    }
+    
+</script>
+{% endspaceless %}

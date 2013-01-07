@@ -1,0 +1,3 @@
+ee_exception_js_catch_error:
+    pattern:  /exception-js/catch-error
+    defaults: { _controller: EEExceptionJSBundle:ExceptionJS:catchError}
