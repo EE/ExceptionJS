@@ -1,26 +1,20 @@
 {% spaceless %}
-<script type="text/javascript">
-   
-window.onerror=function(message, url, linenumber){
-        var data = {
-            'message' : message,
-            'url': url,
-            'linenumber': linenumber,
-            'userAgent' : navigator.userAgent
-            };
-            
-        $.ajax({
-            type: 'POST',
-            url: '{{ path('ee_exception_js_catch_error') }}',
-            data: {
-                'jsError' : data
+    <script type="text/javascript">
+        window.onerror=function(message, url, linenumber){
+            if (window.XMLHttpRequest) {
+                var data = {
+                    'message' : message,
+                    'url': url,
+                    'linenumber': linenumber,
+                    'userAgent' : navigator.userAgent
+                };
+
+                var request = new XMLHttpRequest();
+                request.open("POST", "{{ path('ee_exception_js_catch_error') }}", true);
+                request.setRequestHeader('Content-type','application/json; charset=utf-8');
+                request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                request.send(JSON.stringify({ 'jsError': data }));
             }
-          });
-        
-            
-          return true;
-       
-    }
-    
-</script>
+        }
+    </script>
 {% endspaceless %}
