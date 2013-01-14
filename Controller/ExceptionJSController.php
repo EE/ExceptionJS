@@ -22,7 +22,7 @@ class ExceptionJSController extends Controller
             $logger->pushHandler(new \Monolog\Handler\StreamHandler($this->get('kernel')->getRootDir().'/logs/'.$this->get('kernel')->getEnvironment().'.js.log', $logger::ERROR));
             $logger->err($logData);
 
-            return $this->render('EEExceptionJSBundle:ExceptionJS:catchError.json.twig', array('data' => json_encode($logData)));
+            return $this->render('EEExceptionJSBundle:ExceptionJS:catchError.json.twig', array('data' => $logData));
         }
         else {
             throw new BadRequestHttpException('No JSON request');
