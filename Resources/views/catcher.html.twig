@@ -1,19 +1,20 @@
 {% spaceless %}
     <script type="text/javascript">
         window.onerror=function(message, url, linenumber){
-            var data = {
-                'message' : message,
-                'url': url,
-                'linenumber': linenumber,
-                'userAgent' : navigator.userAgent
-            };
+            if (window.XMLHttpRequest) {
+                var data = {
+                    'message' : message,
+                    'url': url,
+                    'linenumber': linenumber,
+                    'userAgent' : navigator.userAgent
+                };
 
-            var request = new XMLHttpRequest();
-            request.open("POST", "{{ path('ee_exception_js_catch_error') }}", true);
-            request.setRequestHeader('Content-type','application/json; charset=utf-8');
-            request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-
-            request.send(JSON.stringify({ 'jsError': data }));
+                var request = new XMLHttpRequest();
+                request.open("POST", "{{ path('ee_exception_js_catch_error') }}", true);
+                request.setRequestHeader('Content-type','application/json; charset=utf-8');
+                request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                request.send(JSON.stringify({ 'jsError': data }));
+            }
         }
     </script>
 {% endspaceless %}
