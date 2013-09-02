@@ -1,19 +1,53 @@
 {% spaceless %}
     <script type="text/javascript">
-        window.onerror=function(message, url, linenumber){
+        /**
+         * Gets an XMLHttpRequest. For Internet Explorer 6, attempts to use MSXML 6.0,
+         * then falls back to MXSML 3.0.
+         * Returns null if the object could not be created.
+         * @return XMLHttpRequest | window.ActiveXObject
+         */
+        function getXHR() {
             if (window.XMLHttpRequest) {
-                var data = {
-                    'message' : message,
-                    'url': url,
-                    'linenumber': linenumber,
-                    'userAgent' : navigator.userAgent
-                };
+                return new XMLHttpRequest();
+            } else {
+                try {
+                    return new ActiveXObject('MSXML2.XMLHTTP.6.0');
+                } catch (e) {
+                    try {
+                        return new ActiveXObject('MSXML2.XMLHTTP.3.0');
+                    } catch (e) {
+                        return null;
+                    }
+                }
+            }
+        }
+        /**
+         * Sends error message to server
+         *
+         * @param message
+         * @param url
+         * @param linenumber
+         */
+        window.onerror = function(message, url, linenumber) {
+            var data = {
+                'message' : message,
+                'url': url,
+                'linenumber': linenumber,
+                'userAgent' : navigator.userAgent
+            };
 
-                var request = new XMLHttpRequest();
+            var request = getXHR();
+
+            if (request) {
                 request.open("POST", "{{ path('ee_exception_js_catch_error') }}", true);
                 request.setRequestHeader('Content-type','application/json; charset=utf-8');
                 request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                request.send(JSON.stringify({ 'jsError': data }));
+                if (typeof JSON === 'object') {
+                    request.send(JSON.stringify({ 'jsError': data }));
+                } else {
+                    request.send('{"jsError": {"message":"' + message + '", "url":"' + url + '", "linenumber":"'
+                            + linenumber  + '", "userAgent": "' + navigator.userAgent + '"}}');
+                }
             }
         }
     </script>
