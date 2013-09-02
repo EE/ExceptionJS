@@ -50,7 +50,7 @@ Add at the beginning of app/config/routing.yml
 ```
 
 
-In your base layout include once
+In your base layout, **as a first script on page**, include once
 
 ``` twig
 
